@@ -1,0 +1,12 @@
+domains:
+  - name: github.com
+    ip: 192.30.253.112
+    a:
+      - name: www.
+        value: 	192.30.253.112
+      - name: www.
+        value: 	192.30.253.113
+    mx:
+      - name: github.com.
+        value: ASPMX.L.GOOGLE.COM.
+        priority: 10

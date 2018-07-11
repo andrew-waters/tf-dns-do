@@ -1,0 +1,7 @@
+.terraform
+terraform.tfstate
+terraform.tfstate.backup
+terraform-provider-yaml_*
+config/domains.yaml
+config/output/*
+!config/output/.gitkeep
