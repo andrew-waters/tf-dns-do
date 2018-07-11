@@ -18,6 +18,13 @@ So the less than ideal workaround to this is that you cannot apply changes in th
 
 ## Running
 
+```
+wget "https://github.com/ashald/terraform-provider-yaml/releases/download/v2.0.0/terraform-provider-yaml_v2.0.0-$(uname -s | tr '[:upper:]' '[:lower:]')-amd64"
+chmod +x ./terraform-provider-yaml*
+
+make init
+```
+
 Before each `make` operation, we parse the yaml config and generate JSON which terraform will understand. Notoriously troubled varaibles in TF mean the generated output is more verbose than anyone would like. The good news is, you don't need to see it - you only work with much cleaner yaml. When TF gets better, this project will follow and we hopefully won't need `flatten.go`.
 
 So, first copy the config template and the variable file:
@@ -66,3 +73,8 @@ Name       | Type     | Required On        | Description
 `name`     | `string` | `A`, `CNAME`, `MX` | The zone name
 `value`    | `string` | `A`, `CNAME`, `MX` | The record data
 `priority` | `int`    | `MX`               | Priority for mail servers ([1](https://github.com/terraform-providers/terraform-provider-digitalocean/issues/6)-100)
+
+## Todo
+
+ - [ ] Support for TXT types
+ - [ ] Await fix for [this](https://github.com/terraform-providers/terraform-provider-digitalocean/issues/58)
