@@ -66,5 +66,3 @@ Name       | Type     | Required On        | Description
 `name`     | `string` | `A`, `CNAME`, `MX` | The zone name
 `value`    | `string` | `A`, `CNAME`, `MX` | The record data
 `priority` | `int`    | `MX`               | Priority for mail servers ([1](https://github.com/terraform-providers/terraform-provider-digitalocean/issues/6)-100)
-
-Now you are ready 
