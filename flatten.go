@@ -22,6 +22,7 @@ type DomainInput struct {
 	A    []ARecordInput
 	C    []CRecordInput
 	MX   []MXRecordInput
+	TXT  []TXTRecordInput
 }
 
 // ARecordInput is information about an A record
@@ -32,6 +33,12 @@ type ARecordInput struct {
 
 // CRecordInput is information about a CNAME record
 type CRecordInput struct {
+	Name  string
+	Value string
+}
+
+// TXTRecordInput is information about a CNAME record
+type TXTRecordInput struct {
 	Name  string
 	Value string
 }
@@ -63,6 +70,11 @@ type BaseCNAMERecordOutput struct {
 	Output []CNAMERecordOutput `json:"cname_records_flattened"`
 }
 
+// BaseTXTRecordOutput is the output for TXT records
+type BaseTXTRecordOutput struct {
+	Output []TXTRecordOutput `json:"txt_records_flattened"`
+}
+
 // DomainOutput is the target format for a domain
 type DomainOutput struct {
 	Name string `json:"name"`
@@ -91,6 +103,13 @@ type CNAMERecordOutput struct {
 	Value  string `json:"value"`
 }
 
+// TXTRecordOutput is the target format for a TXT Record
+type TXTRecordOutput struct {
+	Domain string `json:"domain"`
+	Name   string `json:"name"`
+	Value  string `json:"value"`
+}
+
 func main() {
 
 	input := Input{}
@@ -101,19 +120,21 @@ func main() {
 	err = yaml.Unmarshal([]byte(data), &input)
 	check(err)
 
-	domainOutput, aRecordOutput, mxRecordOutput, cnameRecordOutput := generateDomainOutput(input.Domains)
+	domainOutput, aRecordOutput, mxRecordOutput, cnameRecordOutput, txtRecordOutput := generateDomainOutput(input.Domains)
 
 	writeData(bastardise(domainOutput, "domains_flattened"), "./config/output/domains.json")
 	writeData(bastardise(aRecordOutput, "a_records_flattened"), "./config/output/a_records.json")
 	writeData(bastardise(mxRecordOutput, "mx_records_flattened"), "./config/output/mx_records.json")
 	writeData(bastardise(cnameRecordOutput, "cname_records_flattened"), "./config/output/cname_records.json")
+	writeData(bastardise(txtRecordOutput, "txt_records_flattened"), "./config/output/txt_records.json")
 }
 
-func generateDomainOutput(domains []DomainInput) ([]DomainOutput, []ARecordOutput, []MXRecordOutput, []CNAMERecordOutput) {
+func generateDomainOutput(domains []DomainInput) ([]DomainOutput, []ARecordOutput, []MXRecordOutput, []CNAMERecordOutput, []TXTRecordOutput) {
 	domainOutput := make([]DomainOutput, 0)
 	aRecordOutput := make([]ARecordOutput, 0)
 	mxRecordOutput := make([]MXRecordOutput, 0)
 	cnameRecordOutput := make([]CNAMERecordOutput, 0)
+	txtRecordOutput := make([]TXTRecordOutput, 0)
 	for _, domain := range domains {
 		domainOutput = append(domainOutput, DomainOutput{
 			domain.Name,
@@ -141,8 +162,15 @@ func generateDomainOutput(domains []DomainInput) ([]DomainOutput, []ARecordOutpu
 				cname.Value,
 			})
 		}
+		for _, txt := range domain.TXT {
+			txtRecordOutput = append(txtRecordOutput, TXTRecordOutput{
+				domain.Name,
+				txt.Name,
+				txt.Value,
+			})
+		}
 	}
-	return domainOutput, aRecordOutput, mxRecordOutput, cnameRecordOutput
+	return domainOutput, aRecordOutput, mxRecordOutput, cnameRecordOutput, txtRecordOutput
 }
 
 func bastardise(input interface{}, key string) []byte {

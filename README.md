@@ -76,5 +76,4 @@ Name       | Type     | Required On        | Description
 
 ## Todo
 
- - [ ] Support for TXT types
  - [ ] Await fix for [this](https://github.com/terraform-providers/terraform-provider-digitalocean/issues/58)
