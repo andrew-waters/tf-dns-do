@@ -10,3 +10,9 @@ domains:
       - name: github.com.
         value: ASPMX.L.GOOGLE.COM.
         priority: 10
+    c:
+      - name: aloha.github.com.
+        value: github.com.
+    txt:
+      - name: domainkey
+        value: "text val"

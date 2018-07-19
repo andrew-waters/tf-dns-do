@@ -63,16 +63,17 @@ Name   | Type       | Description
 `a`    | `[]record` | an array of A records
 `mx`   | `[]record` | an array of MX records
 `c`    | `[]record` | an array of CNAME records
+`txt`  | `[]record` | an array of TXT records
 
 #### Record Configuration
 
-The record object referenced above depends on the type of record you're creating. It currently supports `A`, `MX` and `CNAME` records and the following properties:
+The record object referenced above depends on the type of record you're creating. It currently supports `A`, `MX`, `CNAME` and `TXT` records and the following properties:
 
-Name       | Type     | Required On        | Description
----------- | -------- | ------------------ | -----------
-`name`     | `string` | `A`, `CNAME`, `MX` | The zone name
-`value`    | `string` | `A`, `CNAME`, `MX` | The record data
-`priority` | `int`    | `MX`               | Priority for mail servers ([1](https://github.com/terraform-providers/terraform-provider-digitalocean/issues/6)-100)
+Name       | Type     | Required On               | Description
+---------- | -------- | ------------------------- | -----------
+`name`     | `string` | `A`, `CNAME`, `MX`, `TXT` | The zone name
+`value`    | `string` | `A`, `CNAME`, `MX`, `TXT` | The record data
+`priority` | `int`    | `MX`                      | Priority for mail servers ([1](https://github.com/terraform-providers/terraform-provider-digitalocean/issues/6)-100)
 
 ## Todo
 
